@@ -1,0 +1,15 @@
+export const loginUrl = 'http://localhost:3000/login';
+export const registerUrl = 'http://localhost:3000/register';
+export const usersUrl = 'http://localhost:3001/api/users';
+export const ContractsUrlBase = 'http://localhost:3000/contracts/';
+export const RequestedContractsUrlBase = 'http://localhost:3000/requestedContracts/';
+export const PendingContractsUrlBase = 'http://localhost:3000/pendingContracts/';
+export const NewContractUrl = 'http://localhost:3000/createContractAsset';
+export const acceptByContractorURL = 'http://localhost:3000/acceptByContractor';
+export const acceptByManagerURL = 'http://localhost:3000/acceptByManager';
+export const dashboardUrlBase = 'http://localhost:3000/userAsset/';
+export const bankAccountUrlBase = 'http://localhost:3000/bankAccountAsset/';
+export const payUrl = 'http://localhost:3000/pay';
+export const removeRequestedURL = 'http://localhost:3000/removeFromRequestedOfContractor';
+export const removePendingURL = 'http://localhost:3000/removeFromPendingOfManager';
+export const revokeURL = 'http://localhost:3000/revoke';
