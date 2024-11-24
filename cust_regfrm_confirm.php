@@ -145,7 +145,7 @@ if(isset($_POST['cnfrm-submit'])){
 // 		unset($_SESSION['$cust_acopening']);
 //--------------------------------------------------------------------------------------		
 	
-	echo  '<script>alert("Application submitted successfully\n\nApplication number : '.$application_no.'\n\nPlease visit bank with application number for account approval\n\nHint: From staff login, approve application")
+	echo  '<script>alert("Application submitted successfully\n\nApplication number : '.$application_no.'\n\nPlease visit bank with application number for account approval")
 			location="index.php"
 			</script>';
 					
