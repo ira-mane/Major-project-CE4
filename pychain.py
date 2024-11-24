@@ -6,31 +6,24 @@ import datetime as datetime
 import pandas as pd
 import hashlib
 
-# Create a Record Data Class that consists of the `sender`, `receiver`, and
-# `amount` attributes
+# Create a Record Data Class that consists of the `sender`, `receiver`, and `amount` attributes
 @dataclass
 class Record:
-
     sender: str
     receiver: str
     amount: float
 
 # Modify the Existing Block Data Class to Store Record Data
-# 1. In the `Block` class, rename the `data` attribute to `record`.
-# 2. Set the data type of the `record` attribute to `Record`.
-
 @dataclass
 class Block:
-
     # Rename the `data` attribute to `record`, and set the data type to `Record`
     record: Record
-
     creator_id: int
     prev_hash: str = "0"
     timestamp: str = datetime.datetime.utcnow().strftime("%H:%M:%S")
     nonce: int = 0
 
-    # adding block and hash it
+    # Adding block and hash it
     def hash_block(self):
         sha = hashlib.sha256()
 
@@ -57,29 +50,25 @@ class PyChain:
     chain: List[Block]
     difficulty: int = 4
 
-    # function rponsible for searching winning hash, adding block to the chain and validation the chain
+    # Function responsible for searching winning hash, adding block to the chain, and validating the chain
     def proof_of_work(self, block):
-
         calculated_hash = block.hash_block()
-
         num_of_zeros = "0" * self.difficulty
 
-        # checking for winning hash
+        # Checking for winning hash
         while not calculated_hash.startswith(num_of_zeros):
-
             block.nonce += 1
-
             calculated_hash = block.hash_block()
 
-        print("Wining Hash", calculated_hash)
+        print("Winning Hash", calculated_hash)
         return block
 
-    # adding block to the chain
+    # Adding block to the chain
     def add_block(self, candidate_block):
         block = self.proof_of_work(candidate_block)
         self.chain += [block]
 
-    # checking the chain
+    # Checking the chain
     def is_valid(self):
         block_hash = self.chain[0].hash_block()
 
@@ -100,7 +89,7 @@ class PyChain:
 @st.cache(allow_output_mutation=True)
 def setup():
     print("Initializing Chain")
-    return PyChain([Block("Genesis", 0)])
+    return PyChain([Block(Record("Genesis", "None", 0.0), 0)])
 
 st.markdown("# PyChain")
 st.markdown("## Store a Transaction Record in the PyChain")
@@ -109,27 +98,25 @@ pychain = setup()
 
 # Add Relevant User Inputs to the Streamlit Interface
 
-# Delete the `input_data` variable from the Streamlit interface.
-input_data = st.text_input("Block Data")
+# Default sender name is "Neha"
+sender_name = "Neha"
 
-# Add an input area where you can get a value for `sender` from the user.
-sender = st.text_input("Sender")
+# Add an input area where you can get a value for `receiver` (Receiver Name)
+receiver_name = st.text_input("Receiver Name")
 
-# Add an input area where you can get a value for `receiver` from the user.
-receiver = st.text_input("Receiver")
+# Add an input area where you can get a value for `customer_id` (Customer ID)
+customer_id = st.text_input("Customer ID")
 
-# Add an input area where you can get a value for `amount` from the user.
-amount = st.number_input("Amount")
+# Add an input area where you can get a value for `transaction_amount`
+transaction_amount = st.number_input("Transaction Amount")
 
 if st.button("Add Block"):
     prev_block = pychain.chain[-1]
     prev_block_hash = prev_block.hash_block()
 
-    # Update `new_block` so that `Block` consists of an attribute named `record`
-    # which is set equal to a `Record` that contains the `sender`, `receiver`,
-    # and `amount` values
+    # Update `new_block` to use the updated inputs
     new_block = Block(
-        record=Record(sender=sender, receiver=receiver, amount=amount),
+        record=Record(sender=sender_name, receiver=f"{receiver_name} (ID: {customer_id})", amount=transaction_amount),
         creator_id=42,
         prev_hash=prev_block_hash
     )
@@ -148,7 +135,7 @@ st.write(pychain_df)
 difficulty = st.sidebar.slider("Block Difficulty", 1, 5, 2)
 pychain.difficulty = difficulty
 
-# visualization of the blocks
+# Visualization of the blocks
 st.sidebar.write("# Block Inspector")
 selected_block = st.sidebar.selectbox(
     "Which block would you like to see?", pychain.chain
@@ -156,10 +143,10 @@ selected_block = st.sidebar.selectbox(
 
 st.sidebar.write(selected_block)
 
-# action - validate chain
+# Action - validate chain
 if st.button("Validate Chain"):
-
     check = pychain.is_valid()
-    if check == True:
+    if check:
         st.write("Blockchain is Valid")
-        st.write(pychain.is_valid())
+    else:
+        st.write("Blockchain is Invalid")
