@@ -2,6 +2,18 @@
 <head>
     <title>Change Password</title>
     <link rel="stylesheet" type="text/css" href="css/customer_pass_change.css"/>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "8WgtwsEm48YwTRrPw",
+      });
+    })();
+    </script>
+
     <style>
         #customer_profile .link3 {
             background-color: rgba(5, 21, 71, 0.4);
@@ -86,7 +98,7 @@
             <input type="password" name="newpass" id="newpass" placeholder="New Password" required>
             <span class="toggle-visibility" onclick="toggleVisibility('newpass', this)">&#128065;</span>
         </div>
-        <input type="submit" name="change_pass" value="Change Password">
+        <input type="submit" onclick="sendMail()" name="change_pass" value="Change Password">
     </form>
 </div>
 
@@ -122,6 +134,11 @@
         
         return true;
     }
+</script>
+<script>
+function sendMail() {
+    emailjs.send("service_t062caj","template_7zn6adp");
+}
 </script>
 </body>
 </html>
