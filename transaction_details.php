@@ -26,7 +26,8 @@ $transaction_details = [
         <h2><?php echo $transaction_details['block_header']; ?></h2>
         <p><strong>Transaction ID:</strong> <?php echo $transaction_details['transaction_id']; ?></p>
         <p><strong>Sender Details:</strong> <?php echo $transaction_details['sender_details']; ?></p>
-        <p><strong>Amount:</strong> $<?php echo $transaction_details['amount']; ?></p>
+        <p><strong>Amount:</strong> ₹<?php echo $transaction_details['amount']; ?></p>
+
         <p><strong>Validation Status:</strong> <?php echo $transaction_details['validation_status']; ?></p>
     </div>
 </body>
